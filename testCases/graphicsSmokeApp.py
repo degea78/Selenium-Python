@@ -11,7 +11,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 
 class LoginTest(unittest.TestCase):
     baseURL = "http://emag.ro"
-    driver = webdriver.Chrome(executable_path = "C:/Users/Pavel/Desktop/Python/Proiect/drivers/chromedriver.exe")
+    driver = webdriver.Chrome(executable_path = "C:/Users/Pavel/Desktop/Python/Proiect/Selenium-Python/drivers/chromedriver.exe")
 
     
 
