@@ -2,7 +2,7 @@ import unittest
 import HtmlTestRunner
 from selenium import webdriver
 import sys
-sys.path.append("C://Users/Pavel/Desktop/Python/Proiect/Selenium-Python")	
+sys.path.append("F://Python/Selenium-Python")	
 import time
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -13,7 +13,7 @@ from selenium.webdriver.support.ui import Select
 
 class LoginTest(unittest.TestCase):
     baseURL = "https://www.pcgarage.ro/"
-    driver = webdriver.Chrome(executable_path = "C:/Users/Pavel/Desktop/Python/Proiect/Selenium-Python/drivers/chromedriver.exe")
+    driver = webdriver.Chrome(executable_path = "F:/Python/Selenium-Python/drivers/chromedriver.exe")
 
     
 
@@ -23,12 +23,13 @@ class LoginTest(unittest.TestCase):
         cls.driver.maximize_window()
             
     def test_graphics(self):
-        wait = WebDriverWait(self.driver, 10) 
+        wait = WebDriverWait(self.driver, 15) 
         actions = ActionChains(self.driver)        
                        
         self.assertEqual("PC Garage | Notebook, calculatoare, sisteme, periferice si componente PC", self.driver.title) 
-        mainBtn = wait.until(EC.element_to_be_clickable((By.XPATH, "//a[@class='cat-nav-tab'][text()='Componente']"))).click() 
-
+        mainBtn = wait.until(EC.element_to_be_clickable((By.XPATH, "//a[@class='cat-nav-tab'][text()='Componente']"))) 
+        mainBtn.click()
+        # Buy Procesor 
         procesoare = wait.until(EC.element_to_be_clickable((By.XPATH, "//a[@href='https://www.pcgarage.ro/procesoare/']"))).click()
         procHeader = wait.until(EC.visibility_of_element_located((By.XPATH, "//b[text()='Procesoare']"))).text
         self.assertTrue(procHeader == "Procesoare")        
@@ -39,8 +40,8 @@ class LoginTest(unittest.TestCase):
         drpElement=self.driver.find_element_by_id("sortsel")
         drp=Select(drpElement)
         drp.select_by_visible_text("Pret descrescator")
-
-        intelProcHeader = wait.until(EC.visibility_of_element_located((By.XPATH, "//b[text()='Procesoare Intel']"))).text
+        time.sleep(1)
+        intelProcHeader = wait.until(EC.presence_of_element_located((By.XPATH, "//b[text()='Procesoare Intel']"))).text
         self.assertTrue(intelProcHeader == "Procesoare Intel") 
 
         intelProcSel = wait.until(EC.element_to_be_clickable((By.XPATH, "//a[@href='https://www.pcgarage.ro/procesoare/intel/coffee-lake-core-i9-9900k-360ghz-box/']"))).click()
@@ -48,15 +49,25 @@ class LoginTest(unittest.TestCase):
         intelProcSelHeader = wait.until(EC.visibility_of_element_located((By.XPATH, "//h1[text()='Procesor Intel Coffee Lake, Core i9 9900K 3.6GHz box']"))).text
         self.assertTrue(intelProcSelHeader == "Procesor Intel Coffee Lake, Core i9 9900K 3.6GHz box")
 
-        # cosProcIntel = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[text()='Adauga in cos']"))).click()
+        cosProcIntel = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[@type='submit'][@aria-label='Adauga Intel Coffee Lake, Core i9 9900K 3.6GHz box in cos']"))).click()
+        cosMeuDeCump = wait.until(EC.visibility_of_element_located((By.XPATH, "//h1[text()='Cosul tau de cumparaturi']"))).text
+        self.assertTrue(cosMeuDeCump == "Cosul tau de cumparaturi")
+        procCosDeCump = wait.until(EC.presence_of_element_located((By.XPATH, "//a[text()='Procesor Intel Coffee Lake, Core i9 9900K 3.6GHz box']")))
+        self.assertIsNotNone(procCosDeCump)
+
+        # Buy Motherboard
+        time.sleep(2)
+        # mainBtn.click()
+        # mbSel = wait.until(EC.element_to_be_clickable((By.XPATH, "//a[@href='https://www.pcgarage.ro/placi-de-baza/']"))).click()
+
+
 
         # self.assertEqual("Procesoare", procHeader)
 
-        # pcMenuBtn = self.driver.find_element_by_xpath("//a[@class ='js-megamenu-list-department-link gtm_31vgamc'][@href='javascript:void(0)']")        
-        # componenteBtn = self.driver.find_element_by_xpath("//a[@class='cat-nav-tab'][text()='Componente']")
+
         # actions.move_to_element(pcMenuBtn).move_to_element(componenteBtn).click().perform()
         
-        # titluComp = wait.until(EC.visibility_of_element_located((By.XPATH, "//h1[text()='Componente PC']")))
+  
 
         # self.assertEqual("Componente PC", titluComp)
         # self.driver.send_keys(Keys.HOME)
@@ -72,4 +83,4 @@ class LoginTest(unittest.TestCase):
         cls.driver.close()
 
 if __name__== "__main__":
-    unittest.main(testRunner=HtmlTestRunner.HTMLTestRunner(output='C:/Users/Pavel/Desktop/Python/Proiect/Selenium-Python/reports'))
+    unittest.main(testRunner=HtmlTestRunner.HTMLTestRunner(output='..\\Selenium-Python\\reports'))
