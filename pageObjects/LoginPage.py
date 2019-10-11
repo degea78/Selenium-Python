@@ -12,3 +12,5 @@ class LoginPage():
         self.driver.find_element_by_id(self.textbox_password_id).send_keys("su")
     def clickLogin(self):
         self.driver.find_element_by_id(self.button_login_id).click()
+    def clickMainBth(self):
+        self.driver.find_element_by_xpath("//a[@class='cat-nav-tab'][text()='Componente']").click()

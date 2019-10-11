@@ -2,7 +2,7 @@ import unittest
 import HtmlTestRunner
 from selenium import webdriver
 import sys
-sys.path.append("F://Python/Selenium-Python")	
+sys.path.append("D://Python/Selenium-Python")	
 import time
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -10,10 +10,11 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
+from pageObjects.LoginPage import LoginPage
 
 class LoginTest(unittest.TestCase):
     baseURL = "https://www.pcgarage.ro/"
-    driver = webdriver.Chrome(executable_path = "F:/Python/Selenium-Python/drivers/chromedriver.exe")
+    driver = webdriver.Chrome(executable_path = "D:/Python/Selenium-Python/drivers/chromedriver.exe")
 
     
 
@@ -23,12 +24,13 @@ class LoginTest(unittest.TestCase):
         cls.driver.maximize_window()
             
     def test_graphics(self):
+        lp=LoginPage(self.driver)
         wait = WebDriverWait(self.driver, 15) 
-        actions = ActionChains(self.driver)        
+        actions = ActionChains(self.driver)
+        
                        
         self.assertEqual("PC Garage | Notebook, calculatoare, sisteme, periferice si componente PC", self.driver.title) 
-        mainBtn = wait.until(EC.element_to_be_clickable((By.XPATH, "//a[@class='cat-nav-tab'][text()='Componente']"))) 
-        mainBtn.click()
+        lp.clickMainBth()
         # Buy Procesor 
         procesoare = wait.until(EC.element_to_be_clickable((By.XPATH, "//a[@href='https://www.pcgarage.ro/procesoare/']"))).click()
         procHeader = wait.until(EC.visibility_of_element_located((By.XPATH, "//b[text()='Procesoare']"))).text
@@ -57,7 +59,7 @@ class LoginTest(unittest.TestCase):
 
         # Buy Motherboard
         time.sleep(2)
-        # mainBtn.click()
+        lp.clickMainBth()
         # mbSel = wait.until(EC.element_to_be_clickable((By.XPATH, "//a[@href='https://www.pcgarage.ro/placi-de-baza/']"))).click()
 
 
