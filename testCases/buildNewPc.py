@@ -2,7 +2,7 @@ import unittest
 import HtmlTestRunner
 from selenium import webdriver
 import sys
-sys.path.append("D://Python/Selenium-Python")	
+sys.path.append("F://Python/Selenium-Python")	
 import time
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -14,7 +14,7 @@ from pageObjects.LoginPage import LoginPage
 
 class LoginTest(unittest.TestCase):
     baseURL = "https://www.pcgarage.ro/"
-    driver = webdriver.Chrome(executable_path = "D:/Python/Selenium-Python/drivers/chromedriver.exe")
+    driver = webdriver.Chrome(executable_path = "F:/Python/Selenium-Python/drivers/chromedriver.exe")
 
     
 
@@ -27,7 +27,7 @@ class LoginTest(unittest.TestCase):
         lp=LoginPage(self.driver)
         wait = WebDriverWait(self.driver, 15) 
         actions = ActionChains(self.driver)
-        
+        self.driver.implicitly_wait(10)
                        
         self.assertEqual("PC Garage | Notebook, calculatoare, sisteme, periferice si componente PC", self.driver.title) 
         lp.clickMainBth()
@@ -36,7 +36,6 @@ class LoginTest(unittest.TestCase):
         procHeader = wait.until(EC.visibility_of_element_located((By.XPATH, "//b[text()='Procesoare']"))).text
         self.assertTrue(procHeader == "Procesoare")        
         procSel = self.driver.find_element_by_xpath("//p[text()='Producator']//following-sibling::p[@class='lc-filter-char']//span[@class='visuallyhidden']").click()
-
         intelProc = wait.until(EC.element_to_be_clickable((By.XPATH, "//a[@href='https://www.pcgarage.ro/procesoare/intel/']"))).click()
 
         drpElement=self.driver.find_element_by_id("sortsel")
@@ -57,27 +56,29 @@ class LoginTest(unittest.TestCase):
         procCosDeCump = wait.until(EC.presence_of_element_located((By.XPATH, "//a[text()='Procesor Intel Coffee Lake, Core i9 9900K 3.6GHz box']")))
         self.assertIsNotNone(procCosDeCump)
 
-        # Buy Motherboard
-        time.sleep(2)
-        lp.clickMainBth()
-        # mbSel = wait.until(EC.element_to_be_clickable((By.XPATH, "//a[@href='https://www.pcgarage.ro/placi-de-baza/']"))).click()
-
-
-
-        # self.assertEqual("Procesoare", procHeader)
-
-
-        # actions.move_to_element(pcMenuBtn).move_to_element(componenteBtn).click().perform()
+        # Buy Motherboard        
+        lp.clickMainBth()                
+        lp.searchPb()
+        lp.pbClick()
+        lp.pbCosClick()
+        pbCosDeCump = self.driver.find_element_by_xpath ("//td[@class='ct-name']//a[@href='https://www.pcgarage.ro/placi-de-baza/asus/tuf-z390-pro-gaming/']")
+        self.assertTrue(cosMeuDeCump == "Cosul tau de cumparaturi")
+        self.assertIsNotNone(procCosDeCump)
+        self.assertIsNotNone(pbCosDeCump)
         
-  
+        # Buy Ram
+        lp.clickMainBth() 
+        lp.memClick()
+        memHeader = wait.until(EC.presence_of_element_located((By.XPATH, "//b[text()='Memorii']"))).text
+        self.assertTrue(memHeader == "Memorii")        
+        lp.memSelClick()
+        memBuyHeader = wait.until(EC.presence_of_element_located((By.XPATH, "//h1[text()='Memorie G.Skill Trident Z RGB 64GB DDR4 3000MHz CL14 1.35v Dual Channel Kit']"))).text
+        self.assertTrue(memBuyHeader == "Memorie G.Skill Trident Z RGB 64GB DDR4 3000MHz CL14 1.35v Dual Channel Kit")
+        lp.memCosClick() 
+        
 
-        # self.assertEqual("Componente PC", titluComp)
-        # self.driver.send_keys(Keys.HOME)
-        # self.driver.execute_script('window.scrollTo(0, 100*document.body.scrollHeight);')
-        # procesoare = wait.until(EC.element_to_be_clickable((By.XPATH, "//a[text()='Procesoare']")))
-        # procesoare.click()
-
-
+        
+      
 
         time.sleep(5)
     @classmethod
