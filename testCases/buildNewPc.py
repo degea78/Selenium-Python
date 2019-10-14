@@ -26,7 +26,7 @@ class LoginTest(unittest.TestCase):
     def test_graphics(self):
         lp=LoginPage(self.driver)
         wait = WebDriverWait(self.driver, 15) 
-        actions = ActionChains(self.driver)
+        action = ActionChains(self.driver)
         self.driver.implicitly_wait(10)
                        
         self.assertEqual("PC Garage | Notebook, calculatoare, sisteme, periferice si componente PC", self.driver.title) 
@@ -90,6 +90,15 @@ class LoginTest(unittest.TestCase):
         self.assertIsNotNone(pbCosDeCump)
         self.assertIsNotNone(memCosDeCump)
         self.assertIsNotNone(vcCosDeCump)
+
+        # Buy SSD
+        lp.clickMainBth()
+        lp.ssdClick()
+         
+        
+
+
+
       
 
         time.sleep(5)
