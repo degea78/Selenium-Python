@@ -27,3 +27,8 @@ class LoginPage():
         self.driver.find_element_by_xpath("//button[@aria-label='Adauga Inno3D GeForce RTX 2080 SUPER Twin X2 OC 8GB GDDR6 256-bit in cos']").click()
     def ssdClick(self):
         self.driver.find_element_by_xpath( "//a[text()='SSD']").click() 
+    def ssdSerch(self):
+        self.driver.find_element_by_xpath( "//input[@name = 'search'][@id ='searchac']").send_keys("HP EX950 2TB PCI Express 3.0 x4 M.2 2280 HP EX950")
+        self.driver.find_element_by_id("sbbt").click()
+    def ssdSelClick(self):
+        self.driver.find_element_by_xpath( "//b[text()='Express']").click() 

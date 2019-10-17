@@ -94,8 +94,8 @@ class LoginTest(unittest.TestCase):
         # Buy SSD
         lp.clickMainBth()
         lp.ssdClick()
-         
-        
+        lp.ssdSerch()
+        lp.ssdSelClick()
 
 
 
